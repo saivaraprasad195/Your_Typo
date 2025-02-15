@@ -1,0 +1,27 @@
+.current{
+    animation: blinking 1s ease-in-out infinite;
+}
+
+.current-right{
+    animation: blinking-right 1s ease-in-out infinite;
+}
+
+@keyframes blinking {
+    0%{border-left:1px solid white ;}
+    50%{border-left:1px solid black ;}
+    100%{border-left:1px solid white ;}
+}
+
+@keyframes blinking-right {
+    0%{border-right:1px solid white ;}
+    50%{border-right:1px solid black ;}
+    100%{border-right:1px solid white ;}
+}
+
+.correct{
+    color: greenyellow;
+}
+
+.incorrect{
+    color: red;
+}

@@ -1,0 +1,10 @@
+.time-mode {
+  padding-inline: 0.2rem;
+  border-radius: 5px;
+}
+
+.time-mode:hover {
+  background-color: rgb(14 165 233);
+  cursor: pointer;
+  /* color: black; */
+}

@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/Menu.css";
 import { useTestMode } from "../Context/TestModeContext";
 
 function Menu({ countDown }) {
@@ -10,9 +9,9 @@ function Menu({ countDown }) {
   }
 
   return (
-    <div className="menu flex  mx-auto text-white text-xl justify-between p-1">
-      <div className="">{countDown}</div>
-      <div className="modes flex gap-3 ">
+    <div className="menu">
+      <div className="timer">Timer: <span>{countDown}</span></div>
+      <div className="modes">
         <div className="time-mode" id="15" onClick={updateTime}>
           15s
         </div>

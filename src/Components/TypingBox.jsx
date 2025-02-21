@@ -1,20 +1,24 @@
 import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { generate } from "random-words";
-import "../styles/TypingBox.css";
 import Menu from "./Menu";
 import { useTestMode } from "../Context/TestModeContext";
+import Results from "./Results";
 
 const TypingBox = () => {
-  console.log("Typong Box rendered...");
-  const [wordsArray, setWordsArray] = useState(generate(50));
+  const [wordsArray, setWordsArray] = useState(generate(40));
   const [inputFocused, setInputFocused] = useState(true);
   const [testStart, setTestStart] = useState(false);
   const [testEnd, setTestEnd] = useState(false);
   const { testTime } = useTestMode();
   const [countDown, setCountDown] = useState(testTime);
   const [intervalId, setIntervalId] = useState(null);
+  const [correctChars, setCorrectChars] = useState(0);
+  const [incorrectChars, setIncorrectChars] = useState(0);
+  const [correctWords, setCorrectWords] = useState(0);
+  const [extraChars, setExtraChars] = useState(0);
   const [currWordIndex, setCurrWordIndex] = useState(0);
   const [currCharIndex, setCurrCharIndex] = useState(0);
+  const [graphData, setGraphData] = useState([]);
   const inputRef = useRef(null);
 
   const wordSpanRef = useMemo(() => {
@@ -33,6 +37,14 @@ const TypingBox = () => {
 
     //handling SPACE
     if (currCharIndex === currWordChars.length && e.keyCode === 32) {
+      // calculating if all the chars in word are correct to measure accuracy
+      let correctCharsInPreviousWord =
+        wordSpanRef[currWordIndex].current.querySelectorAll(".correct");
+      if (correctCharsInPreviousWord.length === currWordChars.length) {
+        setCorrectWords(correctWords + 1);
+      }
+
+      //On Pressign SPACE making required changes to styles and index values
       currWordChars[currCharIndex - 1].classList.remove("current-right");
       wordSpanRef[currWordIndex + 1].current.childNodes[0].className +=
         " current";
@@ -70,15 +82,18 @@ const TypingBox = () => {
       currWordChars[currCharIndex - 1].classList.remove("current-right");
       wordSpanRef[currWordIndex].current.append(newSpan);
       setCurrCharIndex(currCharIndex + 1);
+      setExtraChars(extraChars + 1);
       return;
     }
 
     //correct typo
     if (e.key === currWordChars[currCharIndex].innerText) {
       currWordChars[currCharIndex].className = "correct";
+      setCorrectChars(correctChars + 1);
     } //incorrect typo
     else {
       currWordChars[currCharIndex].className = "incorrect";
+      setIncorrectChars(incorrectChars + 1);
     }
     //handling end of the word case
     if (currCharIndex + 1 === currWordChars.length) {
@@ -90,6 +105,14 @@ const TypingBox = () => {
     setCurrCharIndex(currCharIndex + 1);
   }
 
+  const calculateWPM = () => {
+    return Math.round(correctChars / 5 / (testTime / 60));
+  };
+
+  const calculateAccuracy = () => {
+    return Math.round((correctWords / currWordIndex) * 100);
+  };
+
   useEffect(() => {
     resetTest();
   }, [testTime]);
@@ -99,6 +122,19 @@ const TypingBox = () => {
     setIntervalId(intervalId);
     function timer() {
       setCountDown((latestCountDown) => {
+        //calculating wpm at particular time gor graphData
+        setCorrectChars((correctChars) => {
+          setGraphData((graphData) => {
+            return [
+              ...graphData,
+              [
+                testTime - latestCountDown + 1,
+                (correctChars / 5 )/ ((testTime - latestCountDown + 1) / 60),
+              ],
+            ];
+          });
+          return correctChars;
+        });
         if (latestCountDown === 1) {
           setTestEnd(true);
           clearInterval(intervalId);
@@ -112,12 +148,12 @@ const TypingBox = () => {
   //resetting current test
   const resetTest = () => {
     clearInterval(intervalId);
+    setWordsArray(generate(40));
     setCountDown(testTime);
     setCurrCharIndex(0);
     setCurrWordIndex(0);
     setTestStart(false);
     setTestEnd(false);
-    setWordsArray(generate(50));
     resetWordSpanRefClassName();
     focusInput();
   };
@@ -155,29 +191,27 @@ const TypingBox = () => {
   };
 
   return (
-    <div>
+    <div className="typingbox-container">
       <Menu countDown={countDown} />
-      <div
-        className="relative h-fit bg-slate-500 mx-auto flex justify-center items-center"
-        onClick={focusInput}
-      >
+      <div className="typingbox" onClick={focusInput}>
         {!inputFocused && !testEnd && (
-          <div className="absolute inset-0 flex justify-center items-center bg-transparent backdrop-blur-[3px] cursor-pointer">
-            <span className="text-black font-semibold py-1 px-3 m-1 bg-slate-300">
-              Click here to Start Typing
-            </span>
+          <div className="typingbox-overlay">
+            <span className="overlaySpan">Click here to Start Typing</span>
           </div>
         )}
         {testEnd ? (
-          <h1>Test Completed.</h1>
+          <Results
+            wpm={calculateWPM()}
+            accuracy={calculateAccuracy()}
+            correctChars={correctChars}
+            incorrectChars={incorrectChars}
+            extraChars={extraChars}
+            graphData={graphData}
+          />
         ) : (
-          <div className="flex flex-wrap justify-center items-center w-[85%] p-1 bg-gray-600">
+          <div className="textBox">
             {wordsArray.map((word, index) => (
-              <span
-                key={index}
-                className="m-1 tracking-wide text-2xl font-semibold"
-                ref={wordSpanRef[index]}
-              >
+              <span key={index} className="wordSpan" ref={wordSpanRef[index]}>
                 {word.split("").map((char, charIndex) => (
                   <span key={charIndex}>{char}</span>
                 ))}
@@ -186,7 +220,7 @@ const TypingBox = () => {
           </div>
         )}
         <input
-          className="opacity-0 w-0 h-0"
+          className="typeInput"
           ref={inputRef}
           onKeyDown={(e) => {
             if (!testEnd) handlekeyPress(e);

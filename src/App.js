@@ -1,15 +1,19 @@
+import { ThemeProvider } from "styled-components";
 import Header from "./Components/Header";
-import KeyBoard from "./Components/KeyBoard";
 import TypingBox from "./Components/TypingBox";
-import "./index.css";
+import { useTheme } from "./Context/ThemeContext";
+import { GlobalStyles } from "./styles/global";
 
 function App() {
+  const { theme } = useTheme();
   return (
-    <div className="bg-gray-900 w-full h-screen">
-      {/* <Header/> */}
-      <TypingBox />
-      {/* <KeyBoard/> */}
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="canvas">
+        <GlobalStyles />
+        <Header />
+        <TypingBox />
+      </div>
+    </ThemeProvider>
   );
 }
 

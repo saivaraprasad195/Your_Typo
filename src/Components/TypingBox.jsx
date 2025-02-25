@@ -103,6 +103,7 @@ const TypingBox = () => {
     }
 
     setCurrCharIndex(currCharIndex + 1);
+    console.log(correctWords);
   }
 
   const calculateWPM = () => {
@@ -152,6 +153,9 @@ const TypingBox = () => {
     setCountDown(testTime);
     setCurrCharIndex(0);
     setCurrWordIndex(0);
+    setCorrectWords(0);
+    setIncorrectChars(0);
+    setExtraChars(0);
     setTestStart(false);
     setTestEnd(false);
     resetWordSpanRefClassName();

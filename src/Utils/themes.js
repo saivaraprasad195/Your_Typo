@@ -25,7 +25,7 @@ const dark = {
 const blue = {
   label: "Blue",
   background: "#27445D",
-  textColor: "#EFE9D5",
+  textColor: "#C8AAAA",
   logoColor:"#71BBB2",
 };
 const green = {
@@ -37,8 +37,8 @@ const green = {
 
 const brown ={
   label: "brown",
-  background: "#A27B5C",
-  textColor: "#DCD7C9",
+  background: "#DCD7C9",
+  textColor: "#A27B5C",
   logoColor: "#2C3930",
 }
 

@@ -10,7 +10,6 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { rgbToHex } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -23,7 +22,6 @@ ChartJS.register(
 );
 
 const Graph = ({ graphData }) => {
-  console.log(graphData);
   return (
     <>
       <Line

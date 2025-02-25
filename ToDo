@@ -1,0 +1,5 @@
+since wordSpanRef is loosing thr references when resetting test. try to change classNmaes for wordSpanRef after the new WordSpanRef is generated.
+
+this will happen after everytime currWordIndex changes to 0 and when wordsArray is changed.
+
+try solving the issue from above info. and test

@@ -14,10 +14,9 @@ const Results = ({
   graphData,
 }) => {
   const [user, loading] = useAuthState(auth);
-  console.log(useAuthState(auth));
+
 
   const pushDataToDB = async () => {
-    console.log(user, loading);
     if (isNaN(accuracy) || accuracy === 0) {
       toast.error("Test not taken. Data not saved");
       return;
@@ -41,12 +40,13 @@ const Results = ({
   };
 
   useEffect(() => {
-    if (user.uid) {
-      pushDataToDB();
-    } else {
+    if (loading) return; 
+    if (!user) {
       toast.warning("Login to Save Results");
+      return;
     }
-  }, [loading]);
+    pushDataToDB();
+  }, [loading,user]);
 
   return (
     <div className="results-box">

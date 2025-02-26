@@ -18,7 +18,6 @@ const AccountCircle = () => {
   const [user] = useAuthState(auth);
   const detailsRef = useRef(null);
   const navigate = useNavigate();
-  console.log(user);
 
   // Close dropdown when clicking outside
   const handleClickOutside = (event) => {

@@ -103,7 +103,6 @@ const TypingBox = () => {
     }
 
     setCurrCharIndex(currCharIndex + 1);
-    console.log(correctWords);
   }
 
   const calculateWPM = () => {

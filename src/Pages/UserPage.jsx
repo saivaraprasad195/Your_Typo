@@ -8,6 +8,7 @@ import Graph from "../Components/Graph";
 import UserInfo from "../Components/UserInfo";
 import { CircularProgress } from "@mui/material";
 import { useTheme } from "../Context/ThemeContext";
+import { toast } from "react-toastify";
 
 const UserPage = () => {
   const [data, setData] = useState([]);
@@ -40,11 +41,9 @@ const UserPage = () => {
       setGraphData(tempGraphData);
       setDataLoading(false)
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
-
-  console.log(data);
 
   useEffect(() => {
     if (!loading) {

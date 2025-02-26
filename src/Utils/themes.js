@@ -1,17 +1,3 @@
-// const darkTheme = {
-//   label: "Dark",
-//   background: "black",
-//   textColor: "white",
-//   typeBoxTextColor: "gray",
-// };
-
-// const redTheme = {
-//   label: "Red",
-//   background: "red",
-//   textColor: "purple",
-//   typeBoxTextColor: "pink",
-// };
-
 const light = {
   label: "Light",
   background: "white",
@@ -40,7 +26,7 @@ const green = {
 };
 
 const brown = {
-  label: "brown",
+  label: "Brown",
   background: "#DCD7C9",
   textColor: "#A27B5C",
   logoColor: "#2C3930",

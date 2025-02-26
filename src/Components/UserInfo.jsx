@@ -11,7 +11,7 @@ const UserInfo = ({totalTests}) => {
     <div className="user-profile">
       <div className="user">
         <div className="picture">
-          <AccountCircleIcon sx={{transform: 'scale(4)' }} />
+          <AccountCircleIcon sx={{ fontSize: {xs:50, sm:80, md:100} }} />
         </div>
         <div className="info">
           <p>Email : {user.email}</p>
@@ -19,7 +19,7 @@ const UserInfo = ({totalTests}) => {
         </div>
       </div>
       <div className="total-tests">
-        <span >Total tests - {totalTests} </span>
+        <span >Total tests - {totalTests}</span>
       </div>
     </div>
   );

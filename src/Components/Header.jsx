@@ -8,7 +8,7 @@ const Header = () => {
   const { theme, setTheme } = useTheme();
   const handleChange = (e) => {
     setTheme(e.value);
-    // localStorage.setItem("theme", JSON.stringify(e.value));
+    localStorage.setItem("theme", JSON.stringify(e.value));
   };
 
   const customStyles = {

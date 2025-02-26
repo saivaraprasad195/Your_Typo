@@ -351,18 +351,17 @@ details ul li:hover{
     transition: all 0.3s linear;
 }
 
-.userpage{
+.userpage, .userpage-loader{
     width:min(800px,100%);
     margin: auto;
 }
 
-.userpage-results{
+.userpage-loader{
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    max-width: calc(min(100%,800px));
-    margin: auto;
-    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .user-profile{
@@ -397,6 +396,16 @@ details ul li:hover{
     font-size: 1.5rem;
     width: 35%;
 }
+.userpage-results{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: calc(min(100%,800px));
+    margin: auto;
+    padding: 1rem;
+}
+
+
 
 
 
@@ -439,6 +448,16 @@ details ul li:hover{
     .logo{
     font-size: 24px;
     }
+    .total-tests{
+        font-size: 1.2rem;
+    }
+    .user-profile{
+        font-size: 0.9rem;
+        padding: 0;
+    }
+    .userpage-results{
+        padding: 0.5rem;
+    }
     
 }
 
@@ -451,6 +470,9 @@ details ul li:hover{
     }
     .timer span{
         font-size: 22px;
+    }
+    .userpage-results{
+        padding: 0.4rem;
     }
 }
 

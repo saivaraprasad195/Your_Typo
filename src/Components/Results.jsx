@@ -13,10 +13,11 @@ const Results = ({
   extraChars,
   graphData,
 }) => {
-  const user = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
+  console.log(useAuthState(auth));
 
   const pushDataToDB = async () => {
-    console.log(accuracy);
+    console.log(user, loading);
     if (isNaN(accuracy) || accuracy === 0) {
       toast.error("Test not taken. Data not saved");
       return;
@@ -30,7 +31,7 @@ const Results = ({
           accuracy,
           timeStamp: new Date(),
           characters: `${correctChars}/${incorrectChars}/${extraChars}`,
-          userId: user.uid
+          userId: user.uid,
         }),
       });
       toast.success("Results saved");
@@ -45,7 +46,7 @@ const Results = ({
     } else {
       toast.warning("Login to Save Results");
     }
-  }, []);
+  }, [loading]);
 
   return (
     <div className="results-box">

@@ -6,12 +6,16 @@ import { useNavigate } from "react-router-dom";
 import UserDataTable from "../Components/UserDataTable";
 import Graph from "../Components/Graph";
 import UserInfo from "../Components/UserInfo";
+import { CircularProgress } from "@mui/material";
+import { useTheme } from "../Context/ThemeContext";
 
 const UserPage = () => {
   const [data, setData] = useState([]);
+  const [graphData, setGraphData] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
-  const [graphData, setGraphData] = useState([]);
   //useAuthState hook returns user and the state of auth object
   //wheather it is loading or not while loading user will be empty
 
@@ -34,10 +38,13 @@ const UserPage = () => {
 
       setData(tempData);
       setGraphData(tempGraphData);
+      setDataLoading(false)
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(data);
 
   useEffect(() => {
     if (!loading) {
@@ -49,9 +56,12 @@ const UserPage = () => {
     }
   }, [loading]);
 
-
-  if (loading) {
-    return <div>Loading...</div>;
+  if (loading || dataLoading) {
+    return (
+      <div className="userpage-loader">
+          <CircularProgress size="7rem" sx={{ color: theme.textColor }} />
+      </div>
+    );
   }
 
   return data ? (

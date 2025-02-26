@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Graph from "./Graph";
 import { auth, db } from "../firebase";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -30,7 +30,7 @@ const Results = ({
           results: [],
         });
       }
-      
+
       await updateDoc(resultsRef, {
         results: arrayUnion({
           wpm,

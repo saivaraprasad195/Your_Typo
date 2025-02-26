@@ -24,6 +24,13 @@ const Results = ({
 
     try {
       const resultsRef = doc(db, "Results", user.uid);
+      const docSnap = await getDoc(resultsRef);
+      if (!docSnap.exists()) {
+        await setDoc(resultsRef, {
+          results: [],
+        });
+      }
+      
       await updateDoc(resultsRef, {
         results: arrayUnion({
           wpm,

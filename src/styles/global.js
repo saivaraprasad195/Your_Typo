@@ -12,8 +12,23 @@ body{
     color: ${({ theme }) => theme.textColor};
     transition: all 0.5s linear;
     max-width: 1200px;
+    height: 100vh;
     margin: auto;
-    overflow: hidden;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+.canvas{
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    gap: 4vw;
+    width:100%;
+    text-align: center;
+    align-items: center;
 }
 
 .header{
@@ -43,10 +58,6 @@ body{
     justify-content: space-around;
     gap: 1rem;
     padding-inline:1rem;
-}
-
-.themeButton{
-    color: black;
 }
 
 details{
@@ -149,7 +160,6 @@ details ul li:hover{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-block:3rem; // adjust later
 }
 
 .typingbox{
@@ -272,28 +282,27 @@ details ul li:hover{
 .results-box{
     display: flex;
     width: 100%;
-    height: auto;
+    height: 40vh;
     margin-inline:auto;
 }
 
 .results{
     width: 35%;
     padding: 1.25rem;
-    /* background-color: red; */
+    align-self: center;
 }
 
 .chart{
     width: 65%;
-    /* background-color: blue; */
 }
 
 .title{
-    font-size: 2.8vw;
-    opacity: 0.7;
+    font-size: 2vw;
+    opacity: 0.5;
 }
 
 .subtitle{
-    font-size: 3vw;
+    font-size: 2.7vw;
     font-weight: 500;
 }
 
@@ -330,16 +339,76 @@ details ul li:hover{
 .icons{
     display: flex;
     gap: 1.5vw;
+    padding: 1rem;
 }
 
 .footer .icons a{
-    color: ${({theme}) => theme.textColor};
+    color: ${({theme}) => theme.logoColor || theme.textColor};
 }
 
 .icons a:hover{
     transform: scale(1.3) translateY(-3px);
     transition: all 0.3s linear;
 }
+
+.userpage{
+    width:min(800px,100%);
+    margin: auto;
+}
+
+.userpage-results{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: calc(min(100%,800px));
+    margin: auto;
+    padding: 1rem;
+}
+
+.user-profile{
+    max-width: 80%;
+    padding: 1rem;
+    margin-inline: auto;
+    margin-block: 1.25rem;
+    display: flex;
+    height: 10rem;
+    border-radius: 25px;
+    background-color: ${({theme}) => theme.textColor};
+    color: ${({theme}) => theme.background} ;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.user{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+}
+
+.user .info{
+    text-align: center;
+    width: 60%;
+}
+
+.total-tests{
+    font-size: 1.5rem;
+    width: 35%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 600px){
     .results-box{
         flex-direction: column-reverse;
@@ -351,6 +420,9 @@ details ul li:hover{
     }
     .results , .chart{
         width: 100%;
+    }
+    .wordSpan{
+        font-size: 22px;
     }
     .title{
     font-size: 4vw;
@@ -367,7 +439,17 @@ details ul li:hover{
     .logo{
     font-size: 24px;
     }
+    
+}
+
+@media only screen and (max-width: 400px){
     .wordSpan{
+        font-size: 20px;
+    }
+    .timer{
+        font-size: 20px;
+    }
+    .timer span{
         font-size: 22px;
     }
 }

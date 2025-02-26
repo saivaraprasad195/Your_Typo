@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useTheme } from "../Context/ThemeContext";
 
 ChartJS.register(
   CategoryScale,
@@ -22,6 +23,8 @@ ChartJS.register(
 );
 
 const Graph = ({ graphData }) => {
+
+  const {theme} = useTheme();
   return (
     <>
       <Line
@@ -31,9 +34,16 @@ const Graph = ({ graphData }) => {
             {
               data: graphData.map((i) => i[1]),
               label: "WPM",
-              borderColor: "#2fa86a",
+              borderColor: theme.graphLineColor,
+              tension:0.4,
+              pointRadius: 5,
+              pointBackgroundColor: theme.textColor,
             },
           ],
+        }}
+
+        options={{
+          responsive :true,
         }}
       />
     </>

@@ -3,6 +3,7 @@ import Graph from "./Graph";
 import { auth, db } from "../firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Results = ({
   wpm,
@@ -12,24 +13,24 @@ const Results = ({
   extraChars,
   graphData,
 }) => {
-  const { uid } = auth.currentUser;
+  const user = useAuthState(auth);
 
   const pushDataToDB = async () => {
     console.log(accuracy);
-    if (isNaN(accuracy)) {
+    if (isNaN(accuracy) || accuracy === 0) {
       toast.error("Test not taken. Data not saved");
       return;
     }
 
     try {
-      const resultsRef = doc(db, "Results", uid);
+      const resultsRef = doc(db, "Results", user.uid);
       await updateDoc(resultsRef, {
         results: arrayUnion({
           wpm,
           accuracy,
           timeStamp: new Date(),
           characters: `${correctChars}/${incorrectChars}/${extraChars}`,
-          userId: uid
+          userId: user.uid
         }),
       });
       toast.success("Results saved");
@@ -39,7 +40,7 @@ const Results = ({
   };
 
   useEffect(() => {
-    if (uid) {
+    if (user.uid) {
       pushDataToDB();
     } else {
       toast.warning("Login to Save Results");

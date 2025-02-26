@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import UserDataTable from "../Components/UserDataTable";
 import Graph from "../Components/Graph";
+import UserInfo from "../Components/UserInfo";
 
 const UserPage = () => {
   const [data, setData] = useState([]);
@@ -23,9 +24,12 @@ const UserPage = () => {
       const resultRef = doc(db, "Results", uid);
       const docSnap = await getDoc(resultRef);
       tempData = docSnap.data().results;
-
+      tempData.reverse();
       tempData.forEach((result) => {
-        tempGraphData.push([new Date(result.timeStamp.seconds*1000).toLocaleDateString(), result.wpm]);
+        tempGraphData.push([
+          new Date(result.timeStamp.seconds * 1000).toLocaleDateString(),
+          result.wpm,
+        ]);
       });
 
       setData(tempData);
@@ -45,17 +49,18 @@ const UserPage = () => {
     }
   }, [loading]);
 
-  console.log(data);
-  console.log(graphData);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return data ? (
-    <div className="canvas">
-      <Graph graphData={graphData}/>
-      <UserDataTable data={data} />
+    <div className="userpage">
+      <UserInfo totalTests={data.length} />
+      <div className="userpage-results">
+        <Graph graphData={graphData} />
+        <UserDataTable data={data} />
+      </div>
     </div>
   ) : (
     <h3>No data found</h3>

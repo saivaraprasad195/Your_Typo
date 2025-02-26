@@ -80,7 +80,7 @@ const Header = () => {
             fill="#ffcc00"
           />
         </svg>
-        <span></span>
+
       </div>
       <div className="header">
         <div className="themeButton">

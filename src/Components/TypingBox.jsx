@@ -10,6 +10,7 @@ const TypingBox = () => {
   const [testStart, setTestStart] = useState(false);
   const [testEnd, setTestEnd] = useState(false);
   const { testTime } = useTestMode();
+  const [resetSameTest,setResetSameTest] = useState(false);
   const [countDown, setCountDown] = useState(testTime);
   const [intervalId, setIntervalId] = useState(null);
   const [correctChars, setCorrectChars] = useState(0);
@@ -117,6 +118,10 @@ const TypingBox = () => {
     resetTest();
   }, [testTime]);
 
+  useEffect(()=>{
+    resetWordSpanRefClassName();
+  },[resetSameTest])
+
   const stratTimer = () => {
     const intervalId = setInterval(timer, 1000);
     setIntervalId(intervalId);
@@ -129,7 +134,7 @@ const TypingBox = () => {
               ...graphData,
               [
                 testTime - latestCountDown + 1,
-                (correctChars / 5 )/ ((testTime - latestCountDown + 1) / 60),
+                (correctChars / 5 / ((testTime - latestCountDown + 1) / 60)).toFixed(2),
               ],
             ];
           });
@@ -152,12 +157,13 @@ const TypingBox = () => {
     setCountDown(testTime);
     setCurrCharIndex(0);
     setCurrWordIndex(0);
+    setCorrectChars(0);
     setCorrectWords(0);
     setIncorrectChars(0);
     setExtraChars(0);
     setTestStart(false);
     setTestEnd(false);
-    resetWordSpanRefClassName();
+    setGraphData([]);
     focusInput();
   };
 
@@ -182,7 +188,7 @@ const TypingBox = () => {
     ) {
       firstLetter.className = "current";
     }
-  }, []);
+  }, [wordsArray]);
 
   const focusInput = () => {
     inputRef.current.focus();
@@ -195,7 +201,7 @@ const TypingBox = () => {
 
   return (
     <div className="typingbox-container">
-      <Menu countDown={countDown} />
+      <Menu countDown={countDown} resetTest={resetTest} setResetSameTest={setResetSameTest}/>
       <div className="typingbox" onClick={focusInput}>
         {!inputFocused && !testEnd && (
           <div className="typingbox-overlay">

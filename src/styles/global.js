@@ -338,7 +338,7 @@ details ul li:hover{
 
 .icons{
     display: flex;
-    gap: 1.5vw;
+    gap: 2rem;
     padding: 1rem;
 }
 
@@ -404,19 +404,6 @@ details ul li:hover{
     margin: auto;
     padding: 1rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media only screen and (max-width: 600px){
     .results-box{

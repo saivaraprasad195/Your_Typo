@@ -36,7 +36,7 @@ const Graph = ({ graphData }) => {
               label: "WPM",
               borderColor: theme.graphLineColor,
               tension:0.4,
-              pointRadius: 5,
+              pointRadius: 1.5,
               pointBackgroundColor: theme.textColor,
             },
           ],
